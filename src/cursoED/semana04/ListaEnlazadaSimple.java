@@ -44,13 +44,13 @@ public class ListaEnlazadaSimple<E> implements Lista<E> {
     
     @Override
     public E get(int index) {
-        validarElementoIndice(index);
+        validarElementoIndice(index); 
         return nodo(index).item;
     }
     
     private void validarElementoIndice(int index) {
     	if (!(index >= 0 && index < tamanyo))
-    	throw new IndexOutOfBoundsException("indice: " + index + ", tamaño: " + tamanyo);
+    		throw new IndexOutOfBoundsException("indice: " + index + ", tamaño: " + tamanyo);
 
     }
     
@@ -89,9 +89,7 @@ public class ListaEnlazadaSimple<E> implements Lista<E> {
     
     //Practica: desarrolla linkearPrimero y linkearMedio
     private void linkearPrimero(E element) {
-        primero = new Nodo<>(element, primero);
-        if (ultimo == null)
-            ultimo = primero;
+        primero = new Nodo<>(element, primero); 
         tamanyo++;
     }
     
@@ -107,14 +105,14 @@ public class ListaEnlazadaSimple<E> implements Lista<E> {
     
     private void validarAgregarIndice(int index) {
     	if (!(index >= 0 && index <= tamanyo))
-    	throw new IndexOutOfBoundsException("indice: " + index + ", tamaño: " + tamanyo);
+    		throw new IndexOutOfBoundsException("indice: " + index + ", tamaño: " + tamanyo);
 
     }
     
     @Override
     public boolean remover(Object o) {
         Nodo<E> previo = null;
-        if (o == null) {
+        if (o == null) { 
             for (Nodo<E> x = primero; x != null; previo = x, x = x.sgte) {
                 if (x.item == null) {
                     desligar(previo, x);

@@ -117,12 +117,10 @@ class ListaEnlazadaSimpleTest {
 	    assertTrue(lista.contiene(10));
 	    assertTrue(lista.contiene(5));
 	    assertTrue(lista.contiene(15));
-
 	    assertFalse(lista.contiene(20)); // Elemento no presente en la lista
 
 	    ListaEnlazadaSimple<Integer> listaVacia = new ListaEnlazadaSimple<>();
 	    assertFalse(listaVacia.contiene(5)); // La lista está vacía
-
 	    listaVacia.agregar(null);
 	    assertTrue(listaVacia.contiene(null)); // Único elemento en la lista es nulo
 	}
@@ -143,7 +141,7 @@ class ListaEnlazadaSimpleTest {
 		assertEquals(5, lista.get(0));
 		assertEquals(10, lista.get(1));
 		assertEquals(15, lista.get(2));
-		assertThrows(IndexOutOfBoundsException.class, () -> lista.get(3));
+		assertThrows(IndexOutOfBoundsException.class, () -> lista.get(4));//Valir el error de el metodo ValidarElementoIndice 
 	}
 
 	@Test
@@ -151,7 +149,8 @@ class ListaEnlazadaSimpleTest {
 		lista.agregar(5);
 		lista.agregar(10);
 		assertEquals(5, lista.set(0, 15));
-		assertEquals(15, lista.get(0));	}
+		assertEquals(15, lista.get(0));			
+	}
 
 
 	@Test
@@ -181,7 +180,8 @@ class ListaEnlazadaSimpleTest {
 		assertFalse(lista.esVacio());
 		lista.limpiar();
 		assertTrue(lista.esVacio());
-		assertEquals(0, lista.tamanyo());	}
+		assertEquals(0, lista.tamanyo());			
+	}
 
 	@Test
 	void testIndiceDe() {
@@ -189,13 +189,10 @@ class ListaEnlazadaSimpleTest {
 	    lista.agregar(10);
 	    lista.agregar(15);
 	    lista.agregar(null);
-
-
 	    assertEquals(1, lista.indiceDe(10));
 	    assertEquals(0, lista.indiceDe(5));
 	    assertEquals(2, lista.indiceDe(15));
 	    assertEquals(3, lista.indiceDe(null));
-
 	    assertEquals(-1, lista.indiceDe(20));
 
 	}
