@@ -17,6 +17,7 @@ class ArrayStackTest {
 	void testPushParaArrayStackLlenoyTamayoDefinido() {
 		ArrayStack<Integer> stacks = new ArrayStack<>(1);
 		stacks.push(3);
+		//Lanza la excepcion
 		assertThrows(RuntimeException.class, () -> stacks.push(4));
 	}
 
@@ -33,10 +34,9 @@ class ArrayStackTest {
 	@Test
 	void testPopVacio() {
 		assertEquals("[]", stack.toString());	
+		//Lanza la excepcion
         assertThrows(RuntimeException.class, () -> stack.pop());
 	}
-	
-	
 	
 	@Test
 	void testPeek() {
@@ -44,13 +44,14 @@ class ArrayStackTest {
         stack.push(2);
         assertEquals(2, stack.peek());
 	}
+	
 	@Test
 	void testPeekArrayStackVacio() {
 		assertEquals("[]", stack.toString());
+		//Lanza la excepcion
 		assertThrows(RuntimeException.class, () -> stack.peek());
 	}
 		
-	
 	@Test
 	void testEmpty() {
 		assertEquals(true,stack.empty());
