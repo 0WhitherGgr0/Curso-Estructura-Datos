@@ -1,4 +1,4 @@
-package curso.ED.semana06;
+package cursoED.semana06;
 
 import cursoED.semana04.Lista;
 import cursoED.semana04.ListaEnlazadaSimple;

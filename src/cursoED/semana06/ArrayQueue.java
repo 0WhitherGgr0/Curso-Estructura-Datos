@@ -1,4 +1,4 @@
-package curso.ED.semana06;
+package cursoED.semana06;
 public class ArrayQueue<E> implements Queue<E> {
 	private static final int DEFAULT_MAX_SIZE = 100;
 	private final int MAX_SIZE;

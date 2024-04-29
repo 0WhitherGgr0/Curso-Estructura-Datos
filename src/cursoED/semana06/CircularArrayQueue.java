@@ -1,4 +1,4 @@
-package curso.ED.semana06;
+package cursoED.semana06;
 
 public class CircularArrayQueue<E> implements Queue<E> {
     private static final int DEFAULT_MAX_SIZE = 100;

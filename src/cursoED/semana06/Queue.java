@@ -1,4 +1,4 @@
-package curso.ED.semana06;
+package cursoED.semana06;
 
 public interface Queue<E> {
 	boolean offer(E e); //add, agregar, encolar, insertar
