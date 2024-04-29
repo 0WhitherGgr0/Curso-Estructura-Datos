@@ -16,6 +16,7 @@ class LinkedListQueueTest {
 	@Test
 	void testOfferExeption() {		
 		assertThrows(NullPointerException.class,() -> q.offer(null));
+
 	}
 	
 	
