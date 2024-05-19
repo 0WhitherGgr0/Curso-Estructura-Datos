@@ -1,4 +1,5 @@
 package cursoED.semana08.tablaarray;
+
 import cursoED.semana06.ArrayDeque;
 import cursoED.semana06.Queue;
 import cursoED.semana07.comun.PriorityQueue;
@@ -6,8 +7,8 @@ import cursoED.semana07.comun.PriorityQueue;
 public class ArrayPriorityQueue<E extends WithPriority> implements PriorityQueue<E> {
 	private Queue<E>[] table;
 	private int numberOfPriority;
- 
-	public ArrayPriorityQueue(int numberOfPriority) { 
+
+	public ArrayPriorityQueue(int numberOfPriority) {
 		if (numberOfPriority < 0) {
 			throw new RuntimeException("Error en prioridad: " + numberOfPriority);
 		}
@@ -21,21 +22,23 @@ public class ArrayPriorityQueue<E extends WithPriority> implements PriorityQueue
 	@Override
 	public boolean isEmpty() {
 		int i = 0;
-		while (table[i].isEmpty() && i < numberOfPriority)
+		while (table[i].isEmpty() && i < numberOfPriority) {
 			i++;
+		}
 		return table[i].isEmpty();
 	}
 
 	@Override
 	public boolean offer(E e) {
-		if (e == null)
+		if (e == null) {
 			throw new NullPointerException();
+		}
 		int priority = e.getPriority();
 		if (priority >= 0 && priority <= numberOfPriority) {
 			return table[priority].offer(e);
-		} else
+		} else {
 			return false;
-
+		}
 	}
 
 	@Override
@@ -55,7 +58,6 @@ public class ArrayPriorityQueue<E extends WithPriority> implements PriorityQueue
 			return table[index].poll();
 		else
 			return null;
-
 	}
 
 	@Override
@@ -75,16 +77,14 @@ public class ArrayPriorityQueue<E extends WithPriority> implements PriorityQueue
 			return table[index].peek();
 		else
 			return null;
-
 	}
 
 	@Override
 	public String toString() {
 		String result = "";
 		for (int i = 0; i < table.length; i++) {
-			result += table[i];
+		result += table[i];
 		}
 		return result;
 	}
-
 }

@@ -2,74 +2,47 @@ package cursoED.semana08.tablaarray;
 
 import java.util.Comparator;
 
-public class Estudiante implements WithPriority{
-	private String codigo;
-	private String apellido;
-	private String nombre;
-	private float promedioPonderado;
-	private int priority;
+import java.util.Objects;
 
-	public Estudiante(String codigo, String apellido, String nombre, float promedioPonderado, int priority) {
+public class Estudiante implements WithPriority {
+    private String id;
+    private String lastName;
+    private String firstName;
+    private float grade;
+    private int priority;
 
-		super();
-		this.codigo = codigo;
-		this.apellido = apellido;
-		this.nombre = nombre;
-		this.promedioPonderado = promedioPonderado;
-		this.priority = priority;
-	}
+    public Estudiante(String id, String lastName, String firstName, float grade, int priority) {
+        this.id = id;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.grade = grade;
+        this.priority = priority;
+    }
 
-	public int getPriority() {
-		return priority;
-	}
-	
+    @Override
+    public int getPriority() {
+        return priority;
+    }
 
-	@Override
-	public int compareTo(Estudiante o) {
-		int result = apellido.compareTo(o.apellido);
-		if (result == 0)
-			return nombre.compareTo(o.nombre);
-		return result;
-	}
+    @Override
+    public String toString() {
+        return id;
+    }
 
-	public String getCodigo() {
-		return codigo;
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Estudiante that = (Estudiante) o;
+        return Float.compare(that.grade, grade) == 0 &&
+                priority == that.priority &&
+                Objects.equals(id, that.id) &&
+                Objects.equals(lastName, that.lastName) &&
+                Objects.equals(firstName, that.firstName);
+    }
 
-	public String getApellido() {
-		return apellido;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public float getPromedioPonderado() {
-		return promedioPonderado;
-	}
-
-	@Override
-	public String toString() {
-		return codigo;
-	}
-
-}
-
-class CodigoComparador implements Comparator<Estudiante> {
-	@Override
-	public int compare(Estudiante e1, Estudiante e2) {
-		return e1.getCodigo().compareTo(e2.getCodigo());
-	}
-}
-
-class PonderadoComparador implements Comparator<Estudiante> {
-	@Override
-	public int compare(Estudiante e1, Estudiante e2) {
-		float diferencia = e1.getPromedioPonderado() - e2.getPromedioPonderado();
-		if (diferencia == 0)
-			return 0;
-		if (diferencia > 0)
-			return 1;
-		return -1;
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, lastName, firstName, grade, priority);
+    }
 }
