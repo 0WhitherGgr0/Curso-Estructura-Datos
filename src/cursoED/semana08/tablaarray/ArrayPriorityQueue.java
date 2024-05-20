@@ -5,8 +5,8 @@ import cursoED.semana06.Queue;
 import cursoED.semana07.comun.PriorityQueue;
 
 public class ArrayPriorityQueue<E extends WithPriority> implements PriorityQueue<E> {
-	private Queue<E>[] table;
-	private int numberOfPriority;
+	private Queue<E>[] table;// Cada posicion del arreglo representa una prioridad especifica
+	private int numberOfPriority;//El numero maximo de prioridades permitidas.
 
 	public ArrayPriorityQueue(int numberOfPriority) {
 		if (numberOfPriority < 0) {
@@ -15,7 +15,7 @@ public class ArrayPriorityQueue<E extends WithPriority> implements PriorityQueue
 		this.numberOfPriority = numberOfPriority;
 		table = new Queue[numberOfPriority + 1];
 		for (int i = 0; i < table.length; i++) {
-			table[i] = new ArrayDeque<>();
+			table[i] = new ArrayDeque<>();// Inicializa cada cola con una instancia de ArrayDeque.
 		}
 	}
 
@@ -47,15 +47,15 @@ public class ArrayPriorityQueue<E extends WithPriority> implements PriorityQueue
 		int index = -1;
 		// búsqueda de la primera cola no vacía
 		do {
-			if (!table[i].isEmpty()) {
-				index = i;
+			if (!table[i].isEmpty()) {//verifica si la cola en el índice i no está vacía.
+				index = i; //Guarda el indice 
 				break;
 			} else
 				i++;
 
 		} while (i <= numberOfPriority);
 		if (index != -1)
-			return table[index].poll();
+			return table[index].poll(); //que se encontró una cola no vacía
 		else
 			return null;
 	}

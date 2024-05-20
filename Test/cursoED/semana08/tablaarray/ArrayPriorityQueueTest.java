@@ -18,7 +18,7 @@ public class ArrayPriorityQueueTest {
 	   }
 	   @Test
 	   public void testOffer() {
-	       assertThrows(NullPointerException.class, () -> pq.offer(null));
+		   assertThrows(NullPointerException.class, () -> pq.offer(null));
 	       assertFalse(pq.offer(new Estudiante("21000001", "Perez", "Juan", 17.5F, 4)));
 	       assertTrue(pq.offer(new Estudiante("21000001", "Arias", "Alex", 17.5F, 0)));
 	       assertTrue(pq.offer(new Estudiante("21000002", "Bellido", "Betty", 17.5F, 1)));
@@ -28,7 +28,21 @@ public class ArrayPriorityQueueTest {
 	       assertEquals("[21000001, 21000004][21000002, 21000005][][21000003]", pq.toString());
 	   } 
 
-	    
+	   @Test
+	   public void testOfferWithNegativePriority() {
+	       
+		   assertFalse(pq.offer(new Estudiante("21000001", "Arias", "Alex", 17.5F, -1)));
+	   
+	   }
+
+	   
+	   @Test
+	   public void testOfferElementsNull() {
+		   assertThrows(NullPointerException.class, () -> pq.offer(null));
+	   }
+	       
+	       
+	      	    
 	    @Test
 	    public void testPoll() {
 	        assertNull(pq.poll());
@@ -44,6 +58,11 @@ public class ArrayPriorityQueueTest {
 	        assertEquals(new Estudiante("21000005", "Elias", "Eva", 17.5F, 1), pq.poll());
 	        assertEquals(new Estudiante("21000003", "Casas", "Carlos", 17.5F, 3), pq.poll());
 	        
+	        assertNull(pq.poll());
+	    }
+
+	    @Test
+	    public void testPollConColaVacia() {
 	        assertNull(pq.poll());
 	    }
 
@@ -67,6 +86,13 @@ public class ArrayPriorityQueueTest {
 	        pq.poll();
 	        assertNull(pq.peek());
 	    }
+	    
+	    
+	    @Test
+	    public void testPeekConColaVacia() {
+	        assertNull(pq.peek());
+	    }
+
 	    @Test
 	    public void testToString() {
 	        pq.offer(new Estudiante("21000001", "Arias", "Alex", 17.5F, 0));
@@ -93,6 +119,15 @@ public class ArrayPriorityQueueTest {
 	        assertEquals("[][][][]", pq.toString());
 	    }
 	    
+	    @Test
+	    public void testIsEmptyWithFullQueue() {
+	        pq.offer(new Estudiante("21000001", "Arias", "Alex", 17.5F, 0));
+	        pq.offer(new Estudiante("21000002", "Bellido", "Betty", 17.5F, 1));
+	        pq.offer(new Estudiante("21000003", "Casas", "Carlos", 17.5F, 2));
+	        assertFalse(pq.isEmpty());
+	        
+	    }
+
 	    
 }
  
