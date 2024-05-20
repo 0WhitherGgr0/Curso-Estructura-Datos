@@ -1,7 +1,8 @@
 package cursoED.semana08.tablaarray;
 
-import cursoED.semana06.ArrayDeque;
-import cursoED.semana06.Queue;
+import java.util.ArrayDeque;
+import java.util.Queue;
+
 import cursoED.semana07.comun.PriorityQueue;
 
 public class ArrayPriorityQueue<E extends WithPriority> implements PriorityQueue<E> {

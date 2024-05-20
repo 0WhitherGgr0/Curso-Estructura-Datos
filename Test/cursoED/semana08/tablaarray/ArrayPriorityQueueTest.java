@@ -75,6 +75,7 @@ public class ArrayPriorityQueueTest {
 	        pq.offer(new Estudiante("21000004", "Diaz", "Diana", 17.5F, 0));
 	        pq.offer(new Estudiante("21000005", "Elias", "Eva", 17.5F, 1));
 	        assertEquals(new Estudiante("21000001", "Arias", "Alex", 17.5F, 0), pq.peek());
+	        assertEquals(new Estudiante("21000001", "Arias", "Alex", 17.5F, 0), pq.peek());
 	        pq.poll();
 	        assertEquals(new Estudiante("21000004", "Diaz", "Diana", 17.5F, 0), pq.peek());
 	        pq.poll();
