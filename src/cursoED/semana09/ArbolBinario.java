@@ -67,4 +67,54 @@ public class ArbolBinario<T> {
         }
     }
     
+       
+    private void preordenStr(Nodo<T> nodo, StringBuilder sb) {
+        if (nodo != null) {
+            sb.append(nodo.getDato()).append(", ");
+            preordenStr(nodo.getIzdo(), sb);
+            preordenStr(nodo.getDcho(), sb);
+        }
+    }
+
+    private void inordenStr(Nodo<T> nodo, StringBuilder sb) {
+        if (nodo != null) {
+            inordenStr(nodo.getIzdo(), sb);
+            sb.append(nodo.getDato()).append(", ");
+            inordenStr(nodo.getDcho(), sb);
+        }
+    }
+
+    private void postordenStr(Nodo<T> nodo, StringBuilder sb) {
+        if (nodo != null) {
+            postordenStr(nodo.getIzdo(), sb);
+            postordenStr(nodo.getDcho(), sb);
+            sb.append(nodo.getDato()).append(", ");
+        }
+    }
+   
+    public String preordenStr() {
+        StringBuilder sb = new StringBuilder();
+        preordenStr(this.getRaiz(), sb);
+        if (sb.length() > 0) 
+        	sb.setLength(sb.length() - 2); // Elimina la última coma y espacio
+        return sb.toString();
+    }
+
+    public String inordenStr() {
+        StringBuilder sb = new StringBuilder();
+        inordenStr(this.getRaiz(), sb);
+        if (sb.length() > 0)
+        	sb.setLength(sb.length() - 2); // Elimina la última coma y espacio
+        return sb.toString();
+    }
+
+    public String postordenStr() {
+        StringBuilder sb = new StringBuilder();
+        postordenStr(this.getRaiz(), sb);
+        if (sb.length() > 0) 
+        	sb.setLength(sb.length() - 2); // Elimina la última coma y espacio
+        return sb.toString();
+    }
+
+       
 }

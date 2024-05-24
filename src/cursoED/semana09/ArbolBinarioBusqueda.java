@@ -10,10 +10,7 @@ public class ArbolBinarioBusqueda<T extends Comparable<T>> extends ArbolBinario<
     }
 
     public Nodo<T> buscar(T dato) {
-        if (getRaiz() == null)
-            return null;
-        else
-            return localizar(getRaiz(), dato);
+        return localizar(getRaiz(), dato);
     }
 
     private Nodo<T> localizar(Nodo<T> raizSub, T dato) {
@@ -28,101 +25,46 @@ public class ArbolBinarioBusqueda<T extends Comparable<T>> extends ArbolBinario<
             return localizar(raizSub.getDcho(), dato);
     }
 
-
-
-    
-//************************************************
-    public String preordenStr() {
-        StringBuilder sb = new StringBuilder();
-        preordenStr(this.getRaiz(), sb);
-        return sb.toString();
-    }
-
-    private void preordenStr(Nodo<T> nodo, StringBuilder sb) {
-        if (nodo != null) {
-            sb.append(nodo.getDato()).append(", ");
-            preordenStr(nodo.getIzdo(), sb);
-            preordenStr(nodo.getDcho(), sb);
-        }
-    }
-
-    public String inordenStr() {
-        StringBuilder sb = new StringBuilder();
-        inordenStr(this.getRaiz(), sb);
-        return sb.toString();
-    }
-
-    private void inordenStr(Nodo<T> nodo, StringBuilder sb) {
-        if (nodo != null) {
-            inordenStr(nodo.getIzdo(), sb);
-            sb.append(nodo.getDato()).append(", ");
-            inordenStr(nodo.getDcho(), sb);
-        }
-    }
-
-    public String postordenStr() {
-        StringBuilder sb = new StringBuilder();
-        postordenStr(this.getRaiz(), sb);
-        return sb.toString();
-    }
-
-    private void postordenStr(Nodo<T> nodo, StringBuilder sb) {
-        if (nodo != null) {
-            postordenStr(nodo.getIzdo(), sb);
-            postordenStr(nodo.getDcho(), sb);
-            sb.append(nodo.getDato()).append(", ");
-        }
-    }
-
-    
-    
- //************************************************************
-    public void insertar(T valor) throws Exception {
+    public void insertar(T valor) throws RuntimeException {
         raiz = insertar(raiz, valor);
     }
 
-    protected Nodo<T> insertar(Nodo<T> raizSub, T dato) throws Exception {
+    protected Nodo<T> insertar(Nodo<T> raizSub, T dato) throws RuntimeException {
         if (raizSub == null)
             raizSub = new Nodo<>(null, dato, null);
         else if (dato.compareTo(raizSub.getDato()) < 0) {
-            Nodo<T> iz;
-            iz = insertar(raizSub.getIzdo(), dato);
+            Nodo<T> iz = insertar(raizSub.getIzdo(), dato);
             raizSub.setIzdo(iz);
         } else if (dato.compareTo(raizSub.getDato()) > 0) {
-            Nodo<T> dr;
-            dr = insertar(raizSub.getDcho(), dato);
+            Nodo<T> dr = insertar(raizSub.getDcho(), dato);
             raizSub.setDcho(dr);
-        } else
-            throw new Exception("Nodo duplicado");
+        } else {
+            throw new RuntimeException("Nodo duplicado");
+        }
         return raizSub;
     }
- 
-    
-//*************************************************************
-    public void eliminar(T valor) throws Exception {
+
+    public void eliminar(T valor) throws RuntimeException {
         raiz = eliminar(raiz, valor);
     }
 
-    protected Nodo<T> eliminar(Nodo<T> raizSub, T dato) throws Exception {
+    protected Nodo<T> eliminar(Nodo<T> raizSub, T dato) throws RuntimeException {
         if (raizSub == null)
-            throw new Exception("No encontrado el nodo con la clave");
-        else if (dato.compareTo(raizSub.getDato()) < 0) {
-            Nodo<T> iz;
-            iz = eliminar(raizSub.getIzdo(), dato);
+            throw new RuntimeException("No encontrado el nodo con la clave");
+        int comparacion = dato.compareTo(raizSub.getDato());
+        if (comparacion < 0) {
+            Nodo<T> iz = eliminar(raizSub.getIzdo(), dato);
             raizSub.setIzdo(iz);
-        } else if (dato.compareTo(raizSub.getDato()) > 0) {
-            Nodo<T> dr;
-            dr = eliminar(raizSub.getDcho(), dato);
+        } else if (comparacion > 0) {
+            Nodo<T> dr = eliminar(raizSub.getDcho(), dato);
             raizSub.setDcho(dr);
-        } else // Nodo encontrado
-        {
-            Nodo<T> q;
-            q = raizSub; // nodo a quitar del árbol
-            if (q.getIzdo() == null)
+        } else {
+            Nodo<T> q = raizSub;
+            if (q.getIzdo() == null) {
                 raizSub = q.getDcho();
-            else if (q.getDcho() == null)
+            } else if (q.getDcho() == null) {
                 raizSub = q.getIzdo();
-            else { // tiene rama izquierda y derecha
+            } else {
                 q = reemplazar(q);
             }
             q = null;
@@ -133,7 +75,7 @@ public class ArbolBinarioBusqueda<T extends Comparable<T>> extends ArbolBinario<
     private Nodo<T> reemplazar(Nodo<T> act) {
         Nodo<T> a, p;
         p = act;
-        a = act.getIzdo(); // rama de nodos menores
+        a = act.getIzdo(); 
         while (a.getDcho() != null) {
             p = a;
             a = a.getDcho();
@@ -145,5 +87,4 @@ public class ArbolBinarioBusqueda<T extends Comparable<T>> extends ArbolBinario<
             p.setDcho(a.getIzdo());
         return a;
     }
-
 }

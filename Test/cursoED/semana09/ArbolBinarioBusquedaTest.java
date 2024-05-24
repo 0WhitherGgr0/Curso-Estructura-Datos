@@ -64,7 +64,7 @@ class ArbolBinarioBusquedaTest {
 	void testInsertarUnNodoQueResultaraEnUnaHojaIzquierda() {
 		abb.insertar(8);
 		assertEquals(8, abb.buscar(8).getDato());
-		abb.inorden(); //8 10 15 25 30 36 64 
+		assertEquals("8, 10, 15, 25, 30, 36, 64", abb.inordenStr()); 
 		System.out.println();
 	}
 	@Test
@@ -72,7 +72,7 @@ class ArbolBinarioBusquedaTest {
 		abb.insertar(16);
 		assertEquals(16, abb.buscar(16).getDato());
 		System.out.println("ArbolBinarioBusquedaTest.testInsertarUnNodoQueResultaraEnUnaHojaDerecha()");
-		abb.inorden(); //10 15 16 25 30 36 64 
+		assertEquals("10, 15, 16, 25, 30, 36, 64", abb.inordenStr());
 		System.out.println();
 //Resultara:	
 //		25
@@ -93,22 +93,35 @@ class ArbolBinarioBusquedaTest {
 		assertThrows(RuntimeException.class, () -> abb.eliminar(8));
 	} 
 	
-	//MODIFICAR EL TEST PARA QUE LOS VALORES SEAN RECIBIDOS
 	@Test
-	void testEliminarHojas() {
+	void testEliminarHojas() {		
+//		25
+//	   /  \
+//	  10   36
+//	   \   / \
+//	   15 30  64
+		
 		abb.eliminar(15);
 		abb.eliminar(30);
 		abb.eliminar(64);
-		//ASSERTEQUALS (ESPERADO, ABB.INORDESTR)
-		abb.inorden();
+		//Resultara:	
+//		25
+//	   /  \
+//	  10   36
+		assertEquals(abb.inordenStr(), "10, 25, 36");
 		System.out.println();
 	}
-	//MODIFICAR EL TEST PARA QUE LOS VALORES SEAN RECIBIDOS
 	@Test
 	void testEliminarNodoQueTieneUnSoloHijoDerecho() {
+//Inicial
+//		25
+//	   /  \
+//	  10   36
+//	   \   / \
+//	   15 30  64
+		
 		abb.eliminar(10);
-		//ASSERTEQUALS (ESPERADO, ABB.INORDESTR)
-		abb.inorden();
+		assertEquals("15, 25, 30, 36, 64",abb.inordenStr());
 		System.out.println();
 //resultara:
 //		25
@@ -121,7 +134,7 @@ class ArbolBinarioBusquedaTest {
 	void testEliminarNodoQueTieneUnSoloHijoIzquierdo() {
 		abb.eliminar(64);
 		abb.eliminar(36);
-		abb.inorden();
+		assertEquals("10, 15, 25, 30",abb.inordenStr());
 		System.out.println();
 //inicialmente:
 //		25
@@ -143,7 +156,7 @@ class ArbolBinarioBusquedaTest {
 		abb.insertar(8);
 		abb.eliminar(25);
 		System.out.println("ArbolBinarioBusquedaTest.testEliminarNodoQueTieneDosHijos()");
-		abb.inorden();
+		assertEquals("8, 10, 15, 30, 36, 64",abb.inordenStr());
 		System.out.println();
 // Inicialmente:
 //		25
@@ -164,7 +177,7 @@ class ArbolBinarioBusquedaTest {
 	void testEliminarNodoQueTieneDosHijosQueSonHojas() {
 		abb.eliminar(36);
 		System.out.println("ArbolBinarioBusquedaTest.testEliminarNodoQueTieneDosHijosQueSonHojas()");
-		abb.inorden();
+		assertEquals("10, 15, 25, 30, 64",abb.inordenStr());
 		System.out.println();
 // Inicialmente:
 //		25
@@ -189,10 +202,10 @@ class ArbolBinarioBusquedaTest {
 		abb.insertar(34);
 		assertEquals(6, abb.altura());
 		System.out.println("ArbolBinarioBusquedaTest.testEliminarNodoQueTieneDosHijosCuyoHijoMenoresTieneMultiplesDesendientes()");
-		abb.inorden();
+		assertEquals("10, 15, 25, 28, 30, 33, 34, 35, 36, 64",abb.inordenStr());
 		System.out.println();
 		abb.eliminar(36);
-		abb.inorden();
+		assertEquals("10, 15, 25, 28, 30, 33, 34, 35, 64",abb.inordenStr());
 		System.out.println();
 		assertEquals(5, abb.altura());
 		assertEquals(25, abb.getRaiz().getDato());
