@@ -79,7 +79,7 @@ public class ArbolAvl<T> {
 		n2.fe = 0;
 		return n2;
 	}
-
+ 
 	public void insertar(T dato) {
 		Logical h = new Logical(false); // intercambia un valor booleano
 		raiz = insertarAvl(raiz, dato, h);
