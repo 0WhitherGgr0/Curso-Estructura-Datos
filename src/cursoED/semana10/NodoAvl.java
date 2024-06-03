@@ -10,6 +10,4 @@ public class NodoAvl<T> extends Nodo<T> {
 		fe = 0;
 	}
 
-	
-
 }
