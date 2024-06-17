@@ -1,5 +1,7 @@
 package cursoED.semana12;
 
+import java.util.NoSuchElementException;
+
 /**
  * Implements a top-down splay tree. Available at
  * http://www.link.cs.cmu.edu/splay/ Author: Danny Sleator <sleator@cs.cmu.edu>
@@ -18,67 +20,68 @@ class BinaryNode {
 }
 
 public class SplayTree {
-	public BinaryNode root;
-
+	private BinaryNode root;
+	
+	public BinaryNode getRoot() {
+		return root;
+	}
+	
 	public SplayTree() {
 		root = null;
 	}
 
-	/**
-	 * Insert into the tree.
-	 * 
-	 * @param x the item to insert.
-	 * @throws DuplicateItemException if x is already present.
-	 */
-	public void insert(Comparable key) {
-		BinaryNode n;
-		int c;
-		if (root == null) {
-			root = new BinaryNode(key);
-			return;
-		}
-		splay(key);
-		if ((c = key.compareTo(root.key)) == 0) {
-			// throw new DuplicateItemException(x.toString());
-			return;
-		}
-		n = new BinaryNode(key);
-		if (c < 0) {
-			n.left = root.left;
-			n.right = root;
-			root.left = null;
-		} else {
-			n.right = root.right;
-			n.left = root;
-			root.right = null;
-		}
-		root = n;
-	}
+    /**
+     * Insert into the tree.
+     *
+     * @param key the item to insert.
+     * @throws IllegalArgumentException if key is already present.
+     */
+    public void insert(Comparable key) {
+        BinaryNode n;
+        int c;
+        if (root == null) {
+            root = new BinaryNode(key);
+            return;
+        }
+        splay(key);
+        if ((c = key.compareTo(root.key)) == 0) {
+            throw new IllegalArgumentException("Duplicate item: " + key.toString());
+        }
+        n = new BinaryNode(key);
+        if (c < 0) {
+            n.left = root.left;
+            n.right = root;
+            root.left = null;
+        } else {
+            n.right = root.right;
+            n.left = root;
+            root.right = null;
+        }
+        root = n;
+    }
 
-	/**
-	 * Remove from the tree.
-	 * 
-	 * @param x the item to remove.
-	 * @throws ItemNotFoundException if x is not found.
-	 */
-	public void remove(Comparable key) {
-		BinaryNode x;
-		splay(key);
-		if (key.compareTo(root.key) != 0) {
-			// throw new ItemNotFoundException(x.toString());
-			return;
-		}
-		// Now delete the root
-		if (root.left == null) {
-			root = root.right;
-		} else {
-			x = root.right;
-			root = root.left;
-			splay(key);
-			root.right = x;
-		}
-	}
-
+    /**
+     * Remove from the tree.
+     *
+     * @param key the item to remove.
+     * @throws NoSuchElementException if key is not found.
+     */
+    public void remove(Comparable key) {
+        BinaryNode x;
+        splay(key);
+        if (key.compareTo(root.key) != 0) {
+            throw new NoSuchElementException("Item not found: " + key.toString());
+        }
+        // Now delete the root
+        if (root.left == null) {
+            root = root.right;
+        } else {
+            x = root.right;
+            root = root.left;
+            splay(key);
+            root.right = x;
+        }
+    }
 	/**
 	 * Find the smallest item in the tree.
 	 */
@@ -130,7 +133,7 @@ public class SplayTree {
 	 * this method just illustrates the top-down method of implementing the
 	 * move-to-root operation
 	 */
-	public void moveToRoot(Comparable key) {
+	private void moveToRoot(Comparable key) {
 		BinaryNode l, r, t, y;
 		l = r = header;
 		t = root;
@@ -217,6 +220,8 @@ public class SplayTree {
 		t.left = header.right;
 		t.right = header.left;
 		root = t;
+	    moveToRoot(key);
+
 	}
 
 	/*// test code stolen from Weiss
