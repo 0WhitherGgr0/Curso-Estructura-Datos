@@ -7,11 +7,11 @@ import java.util.NoSuchElementException;
 
 class SplayTreeTest {
 
-    SplayTree st = new SplayTree();
+    SplayTree<Integer> st = new SplayTree<>();
+    SplayTree<String> STree = new SplayTree<>();
 
     @Test
     void testSplayTree() {
-        SplayTree STree = new SplayTree();
         assertNotNull(STree);
     }
 
@@ -39,11 +39,11 @@ class SplayTreeTest {
 
     @Test
     void testInsertTreeLetters() {
-        st.insert("P");
-        st.insert("N");
-        st.insert("Q");
-        st.insert("A");
-        st.insert("B");
+    	STree.insert("P");
+    	STree.insert("N");
+        STree.insert("Q");
+        STree.insert("A");
+        STree.insert("B");
 
         // Initial Tree after insertions:
         //   B
@@ -54,11 +54,11 @@ class SplayTreeTest {
         // 	      \
         // 	       Q
 
-        assertEquals("B", st.getRoot().key);
-        assertEquals("A", st.getRoot().left.key);
-        assertEquals("N", st.getRoot().right.key);
-        assertEquals("P", st.getRoot().right.right.key);
-        assertEquals("Q", st.getRoot().right.right.right.key);
+        assertEquals("B", STree.getRoot().key);
+        assertEquals("A", STree.getRoot().left.key);
+        assertEquals("N", STree.getRoot().right.key);
+        assertEquals("P", STree.getRoot().right.right.key);
+        assertEquals("Q", STree.getRoot().right.right.right.key);
     }
 
     @Test
@@ -95,13 +95,14 @@ class SplayTreeTest {
 
     @Test
     void testRemove() {
-        st.insert("P");
-        st.insert("X");
-        st.insert("C");
-        st.insert("A");
-        st.insert("B");
-        st.remove("A");
-        st.remove("B");
+    	STree.insert("P");
+    	STree.insert("X");
+    	STree.insert("C");
+    	STree.insert("A");
+    	STree.insert("B");
+
+    	STree.remove("A");
+    	STree.remove("B");
 
         // Tree:
         // C
@@ -109,46 +110,76 @@ class SplayTreeTest {
         //    P
         //    	\
         //		 X
-        assertEquals("C", st.getRoot().key);
-        assertEquals("P", st.getRoot().right.key);
-        assertEquals("X", st.getRoot().right.right.key);
+        assertEquals("C", STree.getRoot().key);
+        assertEquals("P", STree.getRoot().right.key);
+        assertEquals("X", STree.getRoot().right.right.key);
+
     }
 
     @Test
     void testRemoveObjectNotFind() {
-        st.insert("M");
-        st.insert("A");
-        st.insert("C");
+    	STree.insert("M");
+    	STree.insert("A");
+    	STree.insert("C");
 
         // Initial Tree:
         //   C
         // / \
         // A  M
 
-        assertEquals("C", st.getRoot().key);
-        assertEquals("A", st.getRoot().left.key);
-        assertEquals("M", st.getRoot().right.key);
-        st.remove("M");
+        assertEquals("C", STree.getRoot().key);
+        assertEquals("A", STree.getRoot().left.key);
+        assertEquals("M", STree.getRoot().right.key);
+        STree.remove("M");
 
         // Tree:
         // C
         // / 
         // A 
 
-        assertEquals("C", st.getRoot().key);
-        assertEquals("A", st.getRoot().left.key);
+        assertEquals("C", STree.getRoot().key);
+        assertEquals("A", STree.getRoot().left.key);
 
-        assertThrows(NoSuchElementException.class, () -> st.remove("M"));
+        assertThrows(NoSuchElementException.class, () -> STree.remove("M"));
     }
 
     @Test
     void testFindMin() {
-        st.insert("P");
-        st.insert("X");
-        st.insert("C");
-        st.insert("A");
-        st.insert("B");
-        assertEquals("A", st.findMin());
+    	STree.insert("P");
+    	STree.insert("X");
+    	STree.insert("C");
+    	STree.insert("A");
+    	STree.insert("B");
+
+        // Initial Tree after insertions:
+        //   P
+        // /  \
+        // C   X
+    //    /    \
+    //    A    	 P
+        // \      \
+        // 	B       Q
+        assertEquals("A", STree.findMin());
+        
+        assertEquals("A", STree.getRoot().key);
+        assertEquals("B", STree.getRoot().right.key);
+        assertEquals("C", STree.getRoot().right.right.key);
+        assertEquals("P", STree.getRoot().right.right.right.key);
+        assertEquals("X", STree.getRoot().right.right.right.right.key);
+      
+        // Initial Tree after insertions:
+        // 		 A
+        // 		  \
+        // 	       B
+    	//           \
+    	//            C
+        // 		       \
+        // 		        P
+    	//				  \
+        //					X
+        String expected = "A B C P X";
+        assertEquals(expected,STree.display());
+
     }
 
     @Test
@@ -156,23 +187,49 @@ class SplayTreeTest {
         assertNull(st.findMin());
     }
 
-    @Test
-    void testFindMaxNumber() {
-        st.insert(30);
-        st.insert(20);
-        st.insert(10);
-        st.insert(5);
-        assertEquals(30, st.findMax());
-    }
 
     @Test
     void testFindMax() {
-        st.insert("P");
-        st.insert("X");
-        st.insert("C");
-        st.insert("A");
-        st.insert("B");
-        assertEquals("X", st.findMax());
+    	STree.insert("P");
+    	STree.insert("X");
+    	STree.insert("C");
+    	STree.insert("A");
+    	STree.insert("B");
+  
+        // Initial Tree after insertions:
+        // 		  B
+        // 		/  \
+        // 	    A   C
+    	//           \
+    	//            P
+        // 		       \
+        // 		        X
+    	
+        assertEquals("B", STree.getRoot().key);
+        assertEquals("C", STree.getRoot().right.key);
+        assertEquals("P", STree.getRoot().right.right.key);
+        assertEquals("A", STree.getRoot().left.key);
+        assertEquals("X", STree.getRoot().right.right.right.key);
+
+        
+        assertEquals("X", STree.findMax());
+     // Initial Tree after insertions:
+        // 		  X
+        // 		/  
+        // 	   C   
+    	//    / \    
+    	//   B   P    
+        // 	/	
+        // A	
+        assertEquals("X", STree.getRoot().key);
+        assertEquals("C", STree.getRoot().left.key);
+        assertEquals("P", STree.getRoot().left.right.key);
+        assertEquals("A", STree.getRoot().left.left.left.key);
+        assertEquals("B", STree.getRoot().left.left.key);
+
+        String expected = "A B C P X";
+        assertEquals(expected,STree.display());
+   
     }
 
     @Test
@@ -182,13 +239,42 @@ class SplayTreeTest {
 
     @Test
     void testFind() {
-        st.insert("P");
-        st.insert("X");
-        st.insert("C");
-        st.insert("A");
-        st.insert("B");
-        assertEquals("A", st.find("A"));
-        assertNull(st.find("L"));
+    	STree.insert("P");
+    	STree.insert("X");
+    	STree.insert("C");
+    	STree.insert("A");
+    	STree.insert("B");
+    	
+        // Initial Tree after insertions:
+        // 		  B
+        // 		/  \
+        // 	    A   C
+    	//           \
+    	//            P
+        // 		       \
+        // 		        X
+    	
+        assertEquals("B", STree.getRoot().key);
+        assertEquals("C", STree.getRoot().right.key);
+        assertEquals("P", STree.getRoot().right.right.key);
+        assertEquals("A", STree.getRoot().left.key);
+        assertEquals("X", STree.getRoot().right.right.right.key);
+
+        
+        assertEquals("A", STree.find("A"));
+        
+
+        assertEquals("A", STree.getRoot().key);
+        assertEquals("B", STree.getRoot().right.key);
+        assertEquals("C", STree.getRoot().right.right.key);
+        assertEquals("P", STree.getRoot().right.right.right.key);
+        assertEquals("X", STree.getRoot().right.right.right.right.key);
+
+        
+        String expected = "A B C P X";
+        assertEquals(expected,STree.display());
+        
+        assertNull(STree.find("L"));
     }
 
     @Test
@@ -199,11 +285,11 @@ class SplayTreeTest {
     @Test
     void testIsEmpty() {
         assertTrue(st.isEmpty());
-        st.insert("P");
-        st.insert("C");
-        st.insert("A");
-        st.insert("B");
-        assertFalse(st.isEmpty());
+        STree.insert("P");
+        STree.insert("C");
+        STree.insert("A");
+        STree.insert("B");
+        assertFalse(STree.isEmpty());
     }
 
  

@@ -8,21 +8,36 @@ import java.util.NoSuchElementException;
  * This code is in the public domain.
  */
 
-class BinaryNode {
-	BinaryNode(Comparable theKey) {
+class BinaryNode<T> {
+	BinaryNode(T theKey) {
 		key = theKey;
 		left = right = null;
 	}
 
-	Comparable key; // The data in the node
-	BinaryNode left; // Left child
-	BinaryNode right; // Right child
+	T key; // The data in the node
+	BinaryNode<T> left; // Left child
+	BinaryNode<T> right; // Right child
+	
+    public String traverse() {
+        StringBuilder result = new StringBuilder();
+        traverse(result);
+        return result.toString().trim();
+    }
+    private void traverse(StringBuilder result) {
+        if (left != null) {
+            left.traverse(result);
+        }
+        result.append(key).append(" ");
+        if (right != null) {
+            right.traverse(result);
+        }
+    }
 }
 
-public class SplayTree {
-	private BinaryNode root;
+public class SplayTree<T extends Comparable> {
+	private BinaryNode<T> root;
 	
-	public BinaryNode getRoot() {
+	public BinaryNode<T> getRoot() {
 		return root;
 	}
 	
@@ -36,18 +51,18 @@ public class SplayTree {
      * @param key the item to insert.
      * @throws IllegalArgumentException if key is already present.
      */
-    public void insert(Comparable key) {
-        BinaryNode n;
+    public void insert(T key) {
+        BinaryNode<T> n;
         int c;
         if (root == null) {
-            root = new BinaryNode(key);
+            root = new BinaryNode<>(key);
             return;
         }
         splay(key);
         if ((c = key.compareTo(root.key)) == 0) {
             throw new IllegalArgumentException("Duplicate item: " + key.toString());
         }
-        n = new BinaryNode(key);
+        n = new BinaryNode<T>(key);
         if (c < 0) {
             n.left = root.left;
             n.right = root;
@@ -66,8 +81,8 @@ public class SplayTree {
      * @param key the item to remove.
      * @throws NoSuchElementException if key is not found.
      */
-    public void remove(Comparable key) {
-        BinaryNode x;
+    public void remove(T key) {
+        BinaryNode<T> x;
         splay(key);
         if (key.compareTo(root.key) != 0) {
             throw new NoSuchElementException("Item not found: " + key.toString());
@@ -85,8 +100,8 @@ public class SplayTree {
 	/**
 	 * Find the smallest item in the tree.
 	 */
-	public Comparable findMin() {
-		BinaryNode x = root;
+	public T findMin() {
+		BinaryNode<T> x = root;
 		if (root == null)
 			return null;
 		while (x.left != null)
@@ -98,8 +113,8 @@ public class SplayTree {
 	/**
 	 * Find the largest item in the tree.
 	 */
-	public Comparable findMax() {
-		BinaryNode x = root;
+	public T findMax() {
+		BinaryNode<T> x = root;
 		if (root == null)
 			return null;
 		while (x.right != null)
@@ -111,11 +126,11 @@ public class SplayTree {
 	/**
 	 * Find an item in the tree.
 	 */
-	public Comparable find(Comparable key) {
+	public T find(T key) {
 		if (root == null)
 			return null;
 		splay(key);
-		if (root.key.compareTo(key) != 0)
+		if (root.key.compareTo( key) != 0)
 			return null;
 		return root.key;
 	}
@@ -133,8 +148,8 @@ public class SplayTree {
 	 * this method just illustrates the top-down method of implementing the
 	 * move-to-root operation
 	 */
-	private void moveToRoot(Comparable key) {
-		BinaryNode l, r, t, y;
+	private void moveToRoot(T key) {
+		BinaryNode<T> l, r, t, y;
 		l = r = header;
 		t = root;
 		header.left = header.right = null;
@@ -177,8 +192,8 @@ public class SplayTree {
 	 * property is used in the delete() method.
 	 */
 
-	private void splay(Comparable key) {
-		BinaryNode l, r, t, y;
+	private void splay(T key) {
+		BinaryNode<T> l, r, t, y;
 		l = r = header;
 		t = root;
 		header.left = header.right = null;
@@ -223,6 +238,10 @@ public class SplayTree {
 	    moveToRoot(key);
 
 	}
+    public String display() {
+        return getRoot().traverse();
+    }
+
 
 	/*// test code stolen from Weiss
 	public static void main(String[] args) {
